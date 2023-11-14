@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSONplaceholder API</title>
+</head>
+<body>
+
+<h1>JSONplaceholder API</h1>
+<h2>Орлов Андрiй КН-22</h2>
+<div id="data-container"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', fetchData);
+
+    function fetchData() {
+        const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                displayData(data);
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
+            });
+    }
+
+    function displayData(data) {
+        const dataContainer = document.getElementById('data-container');
+
+        const list = document.createElement('ul');
+
+        data.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `ID: ${item.id}, Title: ${item.title}`;
+            list.appendChild(listItem);
+        });
+
+        dataContainer.appendChild(list);
+    }
+</script>
+
+</body>
+</html>
